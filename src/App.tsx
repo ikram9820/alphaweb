@@ -1,9 +1,13 @@
 import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import Navbar from "./components/navigation/Navbar";
+import { Navbar, Navigation } from "./components/navigation";
 import ChatRoom from "./components/ChatRoom";
-import VNaivgation from "./components/navigation/VNavigation";
+import { useState, useEffect } from "react";
+import Starter from "./components/Starter";
+import ChatsList from "./components/chats/ChatsList";
 
 function App() {
+  const [selectedRoom, setSelectedRoom] = useState("");
+  
   return (
     <Grid
       templateAreas={{ base: `"nav" "main"`, lg: `"nav nav" "aside main"` }}
@@ -14,14 +18,18 @@ function App() {
       </GridItem>
       <Show above="lg">
         <HStack bg="dodgerblue">
-          <VNaivgation />
+          <Navigation />
           <GridItem area="aside">
-            <div>User's Chats</div>
+            <ChatsList openChat={setSelectedRoom} />
           </GridItem>
         </HStack>
       </Show>
       <GridItem area="main">
-        <ChatRoom />
+        {selectedRoom ? (
+          <ChatRoom id={selectedRoom} />
+        ) : (
+          <Starter user={{ id: "1", name: "ikram" }} />
+        )}
       </GridItem>
     </Grid>
   );

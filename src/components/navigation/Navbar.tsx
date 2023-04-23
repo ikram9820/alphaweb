@@ -1,8 +1,8 @@
 import { HStack, Image, Show } from "@chakra-ui/react";
 import logo from "../../assets/logo.png";
 import ColorModeSwitch from "../ColorModeSwitch";
-import HNaivgation from "./HNaivgation";
 import SearchInput from "../SearchInput";
+import Navigation from "./Navigation";
 
 const Navbar = () => {
   return (
@@ -13,7 +13,7 @@ const Navbar = () => {
         <ColorModeSwitch />
       </Show>
       <Show below="lg">
-        <HNaivgation />
+        <Navigation isVericle={false} />
       </Show>
     </HStack>
   );

@@ -1,4 +1,4 @@
-import MessageItem from "./messageItem";
+import MessageItem from "./MessageItem";
 
 const MessagesList = () => {
   return (
