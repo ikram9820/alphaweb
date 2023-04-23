@@ -4,8 +4,8 @@ const HNaivgation = () => {
   return (
     <div>
       <HStack>
-        <div>nav item1</div>
-        <div>nav item2</div>
+        <div>nav 1</div>
+        <div>nav 2</div>
       </HStack>
     </div>
   );

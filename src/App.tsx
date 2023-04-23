@@ -1,5 +1,5 @@
 import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navigation/Navbar";
 import ChatRoom from "./components/ChatRoom";
 import VNaivgation from "./components/navigation/VNavigation";
 
@@ -13,7 +13,7 @@ function App() {
         <Navbar />
       </GridItem>
       <Show above="lg">
-        <HStack>
+        <HStack bg="dodgerblue">
           <VNaivgation />
           <GridItem area="aside">
             <div>User's Chats</div>

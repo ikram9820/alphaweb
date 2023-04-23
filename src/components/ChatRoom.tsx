@@ -1,11 +1,11 @@
 import { Button, HStack, Input, VStack } from "@chakra-ui/react";
-import MessagesLog from "./MessagesLog";
+import MessagesList from "./messages/MessagesList";
 
 const ChatRoom = () => {
   return (
     <VStack bg="">
       <h1>Chat Room with user</h1>
-      <MessagesLog></MessagesLog>
+      <MessagesList></MessagesList>
       <HStack>
         <Button>imoji</Button>
         <Input placeholder="Enter Your message" />
