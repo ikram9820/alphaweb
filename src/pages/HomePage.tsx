@@ -1,21 +1,18 @@
-import { useState } from "react";
 import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import { Navbar, Navigation } from "./components/navigation";
-import ChatRoom from "./components/ChatRoom";
-import Starter from "./components/Starter";
-import ChatsList from "./components/chats/ChatsList";
+import {  Navigation } from "../components/navigation";
+import ChatRoom from "../components/ChatRoom";
+import { useState } from "react";
+import Starter from "../components/Starter";
+import ChatsList from "../components/chats/ChatsList";
 
-function App() {
+const Home = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
 
   return (
     <Grid
-      templateAreas={{ base: `"nav" "main"`, lg: `"nav nav" "aside main"` }}
+      templateAreas={{ base: ` "main"`, lg: ` "aside main"` }}
       templateColumns={{ base: "1fr", lg: "250px 1fr" }}
     >
-      <GridItem area="nav">
-        <Navbar />
-      </GridItem>
       <Show above="lg">
         <HStack bg="dodgerblue">
           <Navigation />
@@ -33,6 +30,6 @@ function App() {
       </GridItem>
     </Grid>
   );
-}
+};
 
-export default App;
+export default Home;

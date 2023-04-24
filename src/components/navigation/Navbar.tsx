@@ -4,7 +4,7 @@ import ColorModeSwitch from "../ColorModeSwitch";
 import SearchInput from "../SearchInput";
 import Navigation from "./Navigation";
 
-const Navbar = () => {
+const NavBar = () => {
   return (
     <HStack padding="10px">
       <Image src={logo} boxSize="40px" rounded="full" />
@@ -19,4 +19,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;
