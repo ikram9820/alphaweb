@@ -2,9 +2,8 @@ import { Button, HStack, Input, VStack } from "@chakra-ui/react";
 import MessagesList from "./messages/MessagesList";
 import { useParams } from "react-router-dom";
 
-
 const ChatRoom = () => {
-  let params =useParams()
+  let params = useParams();
   let id = params.id;
   return (
     <VStack bg="">

@@ -19,7 +19,6 @@ const router = createBrowserRouter([
       { index: true, element: <ReelsPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/signup", element: <SigupPage /> },
-      { path: "/reels", element: <ReelsPage /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/profile/:id", element: <ProfilePage /> },
     ],
@@ -28,10 +27,15 @@ const router = createBrowserRouter([
     element: <PrivateRoutes />,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
+        path: "",
+        element: <Layout />,
         children: [
-          { path: ":id", element: <ChatRoom /> },
+          {
+            path: "chats",
+            element: <HomePage />,
+            children: [{ path: ":id", element: <ChatRoom /> }],
+          },
+
           { path: "profile", element: <ProfilePage /> },
         ],
       },

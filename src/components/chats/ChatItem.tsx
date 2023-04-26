@@ -1,19 +1,16 @@
-import { Link } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { Chat } from "../../interfaces";
 
 interface Props {
   chat: Chat;
-  onOpenChat(id: string): void;
 }
 
-const ChatItem = ({ chat, onOpenChat }: Props) => {
-  function handleOpenChat(id: string) {
-    onOpenChat(id);
-  }
+const ChatItem = ({ chat }: Props) => {
+  
 
   return (
     <>
-      <Link onClick={() => handleOpenChat(chat.id)}>
+      <Link to={ chat.id}>
         {chat.userId} : {chat.initialMessage}
       </Link>
     </>

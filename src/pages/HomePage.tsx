@@ -1,32 +1,23 @@
-import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import {  Navigation } from "../components/navigation";
-import ChatRoom from "../components/ChatRoom";
-import { useState } from "react";
+import { Grid, GridItem, Show } from "@chakra-ui/react";
 import Starter from "../components/Starter";
 import ChatsList from "../components/chats/ChatsList";
+import { Outlet, useOutlet } from "react-router-dom";
 
 const Home = () => {
-  const [selectedRoom, setSelectedRoom] = useState("");
-
+  const outlet = useOutlet();
   return (
     <Grid
       templateAreas={{ base: ` "main"`, lg: ` "aside main"` }}
       templateColumns={{ base: "1fr", lg: "250px 1fr" }}
     >
-      <Show above="lg">
-        <HStack bg="dodgerblue">
-          <Navigation />
-          <GridItem area="aside">
-            <ChatsList openChat={setSelectedRoom} />
-          </GridItem>
-        </HStack>
-      </Show>
+      <GridItem area="aside">{!outlet && <ChatsList />}</GridItem>
       <GridItem area="main">
-        {selectedRoom ? (
-          <ChatRoom id={selectedRoom} />
-        ) : (
-          <Starter user={{ id: "1", name: "ikram" }} />
-        )}
+        <Show above="lg">
+          {!outlet && <Starter user={{ id: "1", name: "ikram" }} />}
+        </Show>
+      </GridItem>
+      <GridItem area="main">
+        <Outlet />
       </GridItem>
     </Grid>
   );
