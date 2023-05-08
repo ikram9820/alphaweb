@@ -20,7 +20,7 @@ class APIClient<T, R = T> {
   };
 
   post = (data: T) => {
-    console.log("posting data...");
+    console.log("posting data...", data);
     return axiosInstance
       .post<T, AxiosResponse<R>>(this.endpoint, data)
       .then((res) => res.data);

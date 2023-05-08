@@ -5,6 +5,7 @@ import { useEffect } from "react";
 function useToProfile() {
   const navigate = useNavigate();
   const user = useUser();
+  console.log(user);
   useEffect(() => {
     if (user !== null) navigate("/profile");
   }, []);

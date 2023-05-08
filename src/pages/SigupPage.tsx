@@ -2,24 +2,20 @@ import { FieldValues, useForm } from "react-hook-form";
 
 import {
   Box,
-  Button,
   Flex,
   FormControl,
   FormLabel,
   HStack,
   Input,
-  InputGroup,
-  InputRightElement,
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import Header from "../components/form/header";
+import Header from "../components/form/Header";
 import Bottom from "../components/form/Bottom";
 import { User } from "../entities/User";
 import useToProfile from "../hooks/useToProfile";
 import useCreateUser from "../hooks/useCreateUser";
+import FormButton from "../components/form/FormButton";
 
 const SigupPage = () => {
   useToProfile();
@@ -28,12 +24,11 @@ const SigupPage = () => {
     handleSubmit,
     formState: { isValid },
   } = useForm<User>();
+  
   const createUser = useCreateUser();
   const onSubmit = (data: FieldValues) => {
-    console.log("submiting data...");
     createUser.mutate(data as User);
   };
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,18 +51,15 @@ const SigupPage = () => {
           >
             <Stack spacing={4}>
               <HStack>
-                <Box>
-                  <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
-                    <Input type="text" {...register("first_name")} />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
-                    <Input type="text" {...register("last_name")} />
-                  </FormControl>
-                </Box>
+                <FormControl id="firstName" isRequired>
+                  <FormLabel>First Name</FormLabel>
+                  <Input type="text" {...register("first_name")} />
+                </FormControl>
+
+                <FormControl id="lastName">
+                  <FormLabel>Last Name</FormLabel>
+                  <Input type="text" {...register("last_name")} />
+                </FormControl>
               </HStack>
               <FormControl id="username" isRequired>
                 <FormLabel>Username</FormLabel>
@@ -79,38 +71,9 @@ const SigupPage = () => {
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    {...register("password")}
-                  />
-                  <InputRightElement h={"full"}>
-                    <Button
-                      variant={"ghost"}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
-                    >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
+                <Input type="password" {...register("password")} />
               </FormControl>
-              <Stack spacing={10} pt={2}>
-                <Button
-                  isDisabled={!isValid}
-                  type="submit"
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={"blue.400"}
-                  color={"white"}
-                  _hover={{
-                    bg: "blue.500",
-                  }}
-                >
-                  Sign up
-                </Button>
-              </Stack>
+              <FormButton isDisabled={!isValid} text="Sign up" type="submit" />
               <Bottom text="Already a user?" link="login" linkText="Login" />
             </Stack>
           </Box>
