@@ -6,31 +6,37 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Heading,
   Input,
-  InputGroup,
-  InputRightElement,
   Stack,
-  Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Header from "../components/form/header";
+import Bottom from "../components/form/Bottom";
+import { Credential } from "../entities/Auth";
 
-interface FormData {
-  email: string;
-  password: string;
-}
+import useToProfile from "../hooks/useToProfile";
+import { Navigate } from "react-router-dom";
+
 const LoginPage = () => {
+  useToProfile();
   const {
     register,
     handleSubmit,
     formState: { isValid },
-  } = useForm<FormData>();
+  } = useForm<Credential>();
 
-  const onSubmit = (data: FieldValues) => console.log(data);
-  const [showPassword, setShowPassword] = useState(false);
+  const auth = useAuth();
+  const onSubmit = (data: FieldValues) => {
+    auth.mutate({ username: data["username"], password: data["password"] });
+  };
+
+  const toast = useToast();
+  console.log(auth.data?.access);
+  if (auth.isError)
+   
+  if (auth.isSuccess) return <Navigate to="/profile" />;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -41,14 +47,7 @@ const LoginPage = () => {
         bg={useColorModeValue("gray.50", "gray.800")}
       >
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-          <Stack align={"center"}>
-            <Heading fontSize={"4xl"} textAlign={"center"}>
-              Login
-            </Heading>
-            <Text fontSize="xl" color="gray.600">
-              to enjoy all of our cool features ✌️
-            </Text>
-          </Stack>
+          <Header title="Login" description="Login here..." />{" "}
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
@@ -56,31 +55,17 @@ const LoginPage = () => {
             p={8}
           >
             <Stack spacing={4}>
-              <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
-                <Input type="email" {...register("email")} />
+              <FormControl id="username" isRequired>
+                <FormLabel>Username</FormLabel>
+                <Input type="text" {...register("username")} />
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    {...register("password")}
-                  />
-                  <InputRightElement h={"full"}>
-                    <Button
-                      variant={"ghost"}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
-                    >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
+                <Input type="password" {...register("password")} />
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
+                  type="submit"
                   isDisabled={!isValid}
                   loadingText="Submitting"
                   size="lg"
@@ -93,14 +78,11 @@ const LoginPage = () => {
                   Login
                 </Button>
               </Stack>
-              <Stack pt={6}>
-                <Text align={"center"}>
-                  Don't Have An Account?{" "}
-                  <Link to="/signup" color={"blue.400"}>
-                    Create An Account
-                  </Link>
-                </Text>
-              </Stack>
+              <Bottom
+                text="Don't Have An Account?"
+                link="signup"
+                linkText="Create An Account"
+              />
             </Stack>
           </Box>
         </Stack>

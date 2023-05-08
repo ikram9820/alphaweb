@@ -1,20 +1,20 @@
 import { useMutation } from "@tanstack/react-query";
-import authService from "../services/authService";
-import { Credential, Token } from "../entities/Auth";
-import { STORAGE_KEY_AUTH } from "../constants";
+import createUserService from "../services/createUserService";
+import { User } from "../entities/User";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-const useAuth = () => {
+const useCreateUser = () => {
   const toast = useToast();
   const navigate = useNavigate();
-  return useMutation<Token, Error, Credential>({
-    mutationFn: (credential: Credential) => {
-      return authService.post(credential);
+  return useMutation<User, Error, User>({
+    mutationFn: (user: User) => {
+      console.log("mutating user...");
+      return createUserService.post(user);
     },
 
-    onSuccess: (savedAuth) => {
-      localStorage.setItem(STORAGE_KEY_AUTH, savedAuth.access);
+    onSuccess: (savedUser) => {
+      console.log(savedUser);
       navigate("/profile");
     },
     onError: (error) => {
@@ -28,4 +28,4 @@ const useAuth = () => {
     },
   });
 };
-export default useAuth;
+export default useCreateUser;

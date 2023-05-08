@@ -7,32 +7,32 @@ import {
   FormControl,
   FormLabel,
   HStack,
-  Heading,
   Input,
   InputGroup,
   InputRightElement,
   Stack,
-  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Header from "../components/form/header";
+import Bottom from "../components/form/Bottom";
+import { User } from "../entities/User";
+import useToProfile from "../hooks/useToProfile";
+import useCreateUser from "../hooks/useCreateUser";
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
 const SigupPage = () => {
+  useToProfile();
   const {
     register,
     handleSubmit,
     formState: { isValid },
-  } = useForm<FormData>();
-
-  const onSubmit = (data: FieldValues) => console.log(data);
+  } = useForm<User>();
+  const createUser = useCreateUser();
+  const onSubmit = (data: FieldValues) => {
+    console.log("submiting data...");
+    createUser.mutate(data as User);
+  };
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -44,14 +44,10 @@ const SigupPage = () => {
         bg={useColorModeValue("gray.50", "gray.800")}
       >
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-          <Stack align={"center"}>
-            <Heading fontSize={"4xl"} textAlign={"center"}>
-              Sign up
-            </Heading>
-            <Text fontSize="xl" color="gray.600">
-              to enjoy all of our cool features ✌️
-            </Text>
-          </Stack>
+          <Header
+            title="Sign up"
+            description="to enjoy all of our cool features ✌️"
+          />
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
@@ -63,16 +59,20 @@ const SigupPage = () => {
                 <Box>
                   <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
-                    <Input type="text" {...register("firstName")} />
+                    <Input type="text" {...register("first_name")} />
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="lastName">
                     <FormLabel>Last Name</FormLabel>
-                    <Input type="text" {...register("lastName")} />
+                    <Input type="text" {...register("last_name")} />
                   </FormControl>
                 </Box>
               </HStack>
+              <FormControl id="username" isRequired>
+                <FormLabel>Username</FormLabel>
+                <Input type="text" {...register("username")} />
+              </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" {...register("email")} />
@@ -99,6 +99,7 @@ const SigupPage = () => {
               <Stack spacing={10} pt={2}>
                 <Button
                   isDisabled={!isValid}
+                  type="submit"
                   loadingText="Submitting"
                   size="lg"
                   bg={"blue.400"}
@@ -110,14 +111,7 @@ const SigupPage = () => {
                   Sign up
                 </Button>
               </Stack>
-              <Stack pt={6}>
-                <Text align={"center"}>
-                  Already a user?{" "}
-                  <Link to="/login" color={"blue.400"}>
-                    Login
-                  </Link>
-                </Text>
-              </Stack>
+              <Bottom text="Already a user?" link="login" linkText="Login" />
             </Stack>
           </Box>
         </Stack>
