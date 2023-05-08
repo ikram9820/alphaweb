@@ -1,9 +1,12 @@
 import { VStack } from "@chakra-ui/react";
-import getChats from "../../data/chats";
 import ChatItem from "./ChatItem";
 
 const ChatsList = () => {
-  let chats = getChats();
+  let chats = [
+    { id: "1", userId: "2", initialMessage: "hello" },
+    { id: "2", userId: "1", initialMessage: "world" },
+    { id: "3", userId: "3", initialMessage: "hi" },
+  ];
   return (
     <VStack>
       {chats.map((chat) => (

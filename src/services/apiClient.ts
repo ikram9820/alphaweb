@@ -1,5 +1,10 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
+export interface FetchResponse<T> {
+  count: number;
+  next: string | null;
+  results: T[];
+}
 const axiosInstance = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
@@ -11,12 +16,16 @@ class APIClient<T, R = T> {
     this.endpoint = endpoint;
   }
 
-  get = () => {
-    return axiosInstance.get<T>(this.endpoint).then((res) => res.data);
+  get = (id: number | string) => {
+    return axiosInstance
+      .get<T>(this.endpoint + "/" + id)
+      .then((res) => res.data);
   };
 
-  getAll = () => {
-    return axiosInstance.get<T[]>(this.endpoint).then((res) => res.data);
+  getAll = (config: AxiosRequestConfig) => {
+    return axiosInstance
+      .get<FetchResponse<T>>(this.endpoint, config)
+      .then((res) => res.data);
   };
 
   post = (data: T) => {
