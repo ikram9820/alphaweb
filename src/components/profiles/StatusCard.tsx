@@ -11,13 +11,10 @@ interface Props {
 const StatusCard = ({ status }: Props) => {
   return (
     <Card>
-      <Heading fontSize="2xl">
-        <Link to={"/statuses/" + status.id}>
-          <ExpandableText>{status.description}</ExpandableText>
-        </Link>
-      </Heading>
       <CardBody>
-        <Image src={status.file || NO_IMAGE} />
+        <Link to={"/statuses/" + status.id}>
+          <Image src={`http://localhost:8000/${status.file}` || NO_IMAGE} />
+        </Link>
       </CardBody>
     </Card>
   );

@@ -6,8 +6,10 @@ import StatusCard from "./StatusCard";
 import StatusCardContainer from "./StatusCardContainer";
 import StatusCardSkeleton from "./StatusCardSkeleton";
 
-const StatusGrid = () => {
-  const profileId = 1;
+interface Props {
+  profileId: number;
+}
+const StatusGrid = ({ profileId }: Props) => {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useProfileStatuses(profileId);
   const skeletons = [1, 2, 3, 4, 5, 6];
