@@ -12,7 +12,6 @@ const useCreateUser = () => {
       console.log("mutating user...");
       return createUserService.post(user);
     },
-
     onSuccess: (savedUser) => {
       console.log(savedUser);
       navigate("/profile");

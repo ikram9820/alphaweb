@@ -4,7 +4,7 @@ const useUser = () => {
   const token = localStorage.getItem(STORAGE_KEY_AUTH);
   if (!token) return null;
   const { user_id } = jwtDecode<{ user_id: number }>(token);
-  return user_id;
+  return { user_id, token };
 };
 
 export default useUser;
